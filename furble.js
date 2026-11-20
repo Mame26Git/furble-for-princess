@@ -175,9 +175,9 @@ function sendGPCmd(data, response_prefix, timeoutMs = GP_TIMEOUT_MS, maxTries = 
                     timer = setTimeout(() => {
                         if (done) return;
                         if (tries >= maxTries) {
-                            finish(reject, new Error('No reply from Furby to command ' + buf2hex(data)));
+                            finish(reject, new Error('Furby Is Lagging, cannot send command ' + buf2hex(data)));
                         } else {
-                            log('No reply yet, resending', buf2hex(data));
+                            log('Furby Is still lagging, resending', buf2hex(data));
                             send();
                         }
                     }, timeoutMs);
@@ -469,7 +469,7 @@ async function activateUploadedDLC(filledSlot) {
     await loadAndActivateDLC(filledSlot);
     slots = await getDLCInfo();
     if (slots.indexOf(SLOT_ACTIVE) != filledSlot)
-        throw new Error('Failed to activate');
+        throw new Error('Failed to activate, press activate again');
 }
 
 async function fetchAndUploadDLC(dlcurl) {
